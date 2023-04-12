@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -16,8 +17,22 @@ import (
  */
 
 func timeConversion(s string) string {
-	// Write your code here
-	return ""
+
+	period := s[len(s)-2:]
+	times := strings.Split(s[:len(s)-2], ":")
+
+	hour, _ := strconv.Atoi(times[0])
+
+	if period == "AM" && hour == 12 {
+		return strings.Join([]string{"00", times[1], times[2]}, ":")
+	}
+
+	if (period == "PM" && hour == 12) || period == "AM" {
+		return s[:len(s)-2]
+	}
+
+	militaryHour := strconv.Itoa(hour + 12)
+	return strings.Join([]string{militaryHour, times[1], times[2]}, ":")
 }
 
 func main() {
